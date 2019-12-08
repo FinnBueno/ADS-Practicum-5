@@ -62,7 +62,7 @@ public class TransportGraph {
         addEdge(toIndex, fromIndex);
 
         connections[fromIndex][toIndex] = connection;
-        connections[toIndex][fromIndex] = new Connection(connection.getTo(), connection.getFrom());
+        connections[toIndex][fromIndex] = new Connection(connection.getTo(), connection.getFrom(), 1, connection.getLine());
     }
 
     public List<Integer> getAdjacentVertices(int index) {
@@ -92,7 +92,6 @@ public class TransportGraph {
     @Override
     public String toString() {
         StringBuilder resultString = new StringBuilder();
-        System.out.println(stationList.size());
         resultString.append(String.format("Graph with %d vertices and %d edges: \n", numberOfStations, numberOfConnections));
         for (int indexVertex = 0; indexVertex < numberOfStations; indexVertex++) {
             resultString.append(stationList.get(indexVertex) + ": ");
@@ -177,9 +176,17 @@ public class TransportGraph {
                 for (int i = 0; i < stationsOnLine.size() - 1; i++) {
                     Station from = stationsOnLine.get(i);
                     Station to = stationsOnLine.get(i + 1);
-                    connectionSet.add(new Connection(from, to));
+                    System.out.printf("Connection %s to %s on line %s%n", from.getStationName(), to.getStationName(), line.toString());
+                    connectionSet.add(new Connection(from, to, 1, line));
                 }
             }
+            System.out.printf(
+                "Built %d connections%n",
+                lineList
+                    .stream()
+                    .mapToInt(line -> line.getStationsOnLine().size() - 1)
+                    .sum()
+            );
             return this;
         }
 
@@ -193,6 +200,7 @@ public class TransportGraph {
             TransportGraph graph = new TransportGraph(stationSet.size());
             stationSet.forEach(graph::addVertex);
             connectionSet.forEach(graph::addEdge);
+            System.out.printf("Connections: %d%n", graph.getNumberEdges());
             return graph;
         }
 

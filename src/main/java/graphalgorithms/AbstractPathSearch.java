@@ -1,11 +1,11 @@
 package graphalgorithms;
 
+import model.Connection;
+import model.Line;
 import model.Station;
 import model.TransportGraph;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Abstract class that contains methods and attributes shared by the DepthFirstPath en BreadthFirstPath classes
@@ -16,7 +16,8 @@ public abstract class AbstractPathSearch {
     protected int[] edgeTo;
     protected int transfers = 0;
     protected List<Station> nodesVisited;
-    protected List<Station> nodesInPath;
+    // made this a linked list to prevent having to inverse it
+    protected LinkedList<Station> nodesInPath;
     protected LinkedList<Integer> verticesInPath;
     protected TransportGraph graph;
     protected final int startIndex;
@@ -49,7 +50,15 @@ public abstract class AbstractPathSearch {
      * @param vertex The station (vertex) as an index
      */
     public void pathTo(int vertex) {
-        // TODO
+        verticesInPath = new LinkedList<>();
+        nodesInPath = new LinkedList<>();
+        int current = endIndex;
+        do {
+            verticesInPath.addFirst(current);
+            nodesInPath.addFirst(graph.getStation(current));
+            current = edgeTo[current];
+        } while (current >= 0);
+        countTransfers();
     }
 
     /**
@@ -58,7 +67,18 @@ public abstract class AbstractPathSearch {
      * If to consecutive connections are on different lines there was a transfer.
      */
     public void countTransfers() {
-        // TODO
+        Iterator<Integer> path = verticesInPath.iterator();
+        Line previousLine = null;
+        int from = path.next();
+        while (path.hasNext()) {
+            int to = path.next();
+            Connection connection = graph.getConnection(from, to);
+            if (previousLine != null && previousLine != connection.getLine()) {
+                transfers++;
+            }
+            previousLine = connection.getLine();
+            from = to;
+        }
     }
 
 
