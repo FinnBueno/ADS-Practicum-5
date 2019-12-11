@@ -8,7 +8,7 @@ public class TransportGraph {
     private int numberOfStations;
     private int numberOfConnections;
     private List<Station> stationList; // vertices
-    private Map<Station, Integer> stationIndices;
+    private Map<String, Integer> stationIndices;
     private List<Integer>[] adjacencyLists;
     private Connection[][] connections; // edges
 
@@ -29,7 +29,7 @@ public class TransportGraph {
      */
     public void addVertex(Station vertex) {
         stationList.add(vertex);
-        stationIndices.put(vertex, stationList.size() - 1);
+        stationIndices.put(vertex.getStationName(), stationList.size() - 1);
     }
 
 
@@ -41,9 +41,9 @@ public class TransportGraph {
      * @param to
      */
     private void addEdge(int from, int to) {
-        // TODO
         this.numberOfConnections++;
         this.adjacencyLists[from].add(to);
+        this.adjacencyLists[to].add(from);
     }
 
 
@@ -55,11 +55,10 @@ public class TransportGraph {
      * @param connection The edge as a connection between stations
      */
     public void addEdge(Connection connection) {
-        int fromIndex = stationIndices.get(connection.getFrom());
-        int toIndex = stationIndices.get(connection.getTo());
+        int fromIndex = stationIndices.get(connection.getFrom().getStationName());
+        int toIndex = stationIndices.get(connection.getTo().getStationName());
 
         addEdge(fromIndex, toIndex);
-        addEdge(toIndex, fromIndex);
 
         connections[fromIndex][toIndex] = connection;
         connections[toIndex][fromIndex] = new Connection(connection.getTo(), connection.getFrom(), 1, connection.getLine());
@@ -73,8 +72,8 @@ public class TransportGraph {
         return connections[from][to];
     }
 
-    public Station getStation(int index) {
-        return stationList.get(index);
+    public int getIndexOfStationByName(String stationName) {
+        return stationIndices.get(stationName);
     }
 
     public int getNumberOfStations() {

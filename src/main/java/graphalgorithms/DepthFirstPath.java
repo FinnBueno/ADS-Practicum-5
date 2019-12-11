@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class DepthFirstPath extends AbstractPathSearch {
 
-	public DepthFirstPath(TransportGraph graph, int start, int end) {
+	public DepthFirstPath(TransportGraph graph, String start, String end) {
 		super(graph, start, end);
-		depthFirstSearch(start);
 	}
 
-	public void depthFirstSearch(int vertex) {
-		depthFirstSearch(vertex, -1);
+	@Override
+	public void search() {
+		depthFirstSearch(startIndex, -1);
 	}
 
 	private void depthFirstSearch(int vertex, int parent) {
@@ -31,7 +31,7 @@ public class DepthFirstPath extends AbstractPathSearch {
 		edgeTo[vertex] = parent;
 
 		// add station to visited list for printing later
-		nodesVisited.add(graph.getStation(vertex));
+		nodesVisited.add(graph.getStationList().get(vertex));
 
 		// see if we found our end station
 		if (vertex == endIndex) {
