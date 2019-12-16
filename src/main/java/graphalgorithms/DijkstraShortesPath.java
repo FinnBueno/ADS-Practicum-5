@@ -58,4 +58,11 @@ public class DijkstraShortesPath extends AbstractPathSearch {
     public double getTotalWeight(int vertex){
         return distTo[vertex];
     }
+
+    @Override
+    public String toString() {
+        StringBuilder resultString = new StringBuilder(String.format("Path from %s to %s: ", graph.getStationList().get(startIndex), graph.getStationList().get(endIndex)));
+        resultString.append(nodesInPath).append(" with " + transfers).append(" transfers").append(" and takes " + getTotalWeight(endIndex) + " minutes");
+        return resultString.toString();
+    }
 }
