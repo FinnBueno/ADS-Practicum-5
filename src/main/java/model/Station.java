@@ -7,6 +7,7 @@ public class Station {
 
     private String stationName;
     private Set<Line> lines;
+    private Location location;
 
     public Station(String nodeName) {
         this.stationName = nodeName;
@@ -15,6 +16,10 @@ public class Station {
 
     public void addLine(Line line) {
         lines.add(line);
+    }
+
+    public void addLocation(Location location){
+        this.location = location;
     }
 
     public String getStationName() {

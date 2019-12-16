@@ -143,6 +143,17 @@ public class TransportGraph {
             return this;
         }
 
+        public Builder addLineLocation(String[] lineDefinition, Location[] locations){
+            Line line = new Line(lineDefinition[0], lineDefinition[1]);
+            for (int i = 2; i < lineDefinition.length; i++) {
+                Station station = new Station(lineDefinition[i]);
+                station.addLocation(locations[i-2]);
+                line.addStation(station);
+            }
+            lineList.add(line);
+            return this;
+        }
+
         /**
          * Method that reads all the lines and their stations to build a set of stations.
          * Stations that are on more than one line will only appear once in the set.
