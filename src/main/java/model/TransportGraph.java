@@ -178,13 +178,20 @@ public class TransportGraph {
         public Builder buildConnections() {
             AtomicInteger iterator = new AtomicInteger();
             for (Line line : lineList) {
-                Double[] weightsList = LineWeights.get(iterator.getAndIncrement());
+                Double[] weightsList = null;
+                if(!LineWeights.isEmpty())
+                    weightsList = LineWeights.get(iterator.getAndIncrement());
+                
                 List<Station> stationsOnLine = line.getStationsOnLine();
                 for (int i = 0; i < stationsOnLine.size() - 1; i++) {
                     Station from = stationsOnLine.get(i);
                     Station to = stationsOnLine.get(i + 1);
                     System.out.printf("Connection %s to %s on line %s%n", from.getStationName(), to.getStationName(), line.toString());
-                    connectionSet.add(new Connection(from, to, weightsList[i], line));
+                    
+                    if(weightsList != null)
+                        connectionSet.add(new Connection(from, to, weightsList[i], line));
+                    else
+                        connectionSet.add(new Connection(from, to, 1.0, line));
                 }
             }
             System.out.printf(
