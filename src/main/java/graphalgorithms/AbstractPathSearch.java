@@ -54,7 +54,7 @@ public abstract class AbstractPathSearch {
     public void pathTo(int vertex) {
         verticesInPath = new LinkedList<>();
         nodesInPath = new LinkedList<>();
-        int current = endIndex;
+        int current = vertex;
         do {
             verticesInPath.addFirst(current);
             nodesInPath.addFirst(graph.getStationList().get(current));

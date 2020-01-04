@@ -1,7 +1,7 @@
 package model;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TransportGraph {
 
@@ -61,7 +61,7 @@ public class TransportGraph {
         addEdge(fromIndex, toIndex);
 
         connections[fromIndex][toIndex] = connection;
-        connections[toIndex][fromIndex] = new Connection(connection.getTo(), connection.getFrom(), 1, connection.getLine());
+        connections[toIndex][fromIndex] = new Connection(connection.getTo(), connection.getFrom(), connection.getWeight(), connection.getLine());
     }
 
     public List<Integer> getAdjacentVertices(int index) {
@@ -113,9 +113,11 @@ public class TransportGraph {
         private Set<Station> stationSet;
         private List<Line> lineList;
         private Set<Connection> connectionSet;
+        private List<Double[]> LineWeights;
 
         public Builder() {
             lineList = new ArrayList<>();
+            LineWeights = new ArrayList<>();
             stationSet = new HashSet<>();
             connectionSet = new HashSet<>();
         }
@@ -136,6 +138,10 @@ public class TransportGraph {
             return this;
         }
 
+        public Builder addWeights(Double[] weightDefinitions){
+            LineWeights.add(weightDefinitions);
+            return this;
+        }
 
         /**
          * Method that reads all the lines and their stations to build a set of stations.
@@ -170,13 +176,22 @@ public class TransportGraph {
          * @return
          */
         public Builder buildConnections() {
+            AtomicInteger iterator = new AtomicInteger();
             for (Line line : lineList) {
+                Double[] weightsList = null;
+                if(!LineWeights.isEmpty())
+                    weightsList = LineWeights.get(iterator.getAndIncrement());
+                
                 List<Station> stationsOnLine = line.getStationsOnLine();
                 for (int i = 0; i < stationsOnLine.size() - 1; i++) {
                     Station from = stationsOnLine.get(i);
                     Station to = stationsOnLine.get(i + 1);
                     System.out.printf("Connection %s to %s on line %s%n", from.getStationName(), to.getStationName(), line.toString());
-                    connectionSet.add(new Connection(from, to, 1, line));
+                    
+                    if(weightsList != null)
+                        connectionSet.add(new Connection(from, to, weightsList[i], line));
+                    else
+                        connectionSet.add(new Connection(from, to, 1.0, line));
                 }
             }
             System.out.printf(
