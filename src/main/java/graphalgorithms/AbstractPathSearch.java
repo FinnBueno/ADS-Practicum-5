@@ -24,14 +24,16 @@ public abstract class AbstractPathSearch {
     protected final int endIndex;
 
 
-    public AbstractPathSearch(TransportGraph graph, int start, int end) {
-        startIndex = start;
-        endIndex = end;
+    public AbstractPathSearch(TransportGraph graph, String start, String end) {
+        startIndex = graph.getIndexOfStationByName(start);
+        endIndex = graph.getIndexOfStationByName(end);
         this.graph = graph;
         nodesVisited = new ArrayList<>();
         marked = new boolean[graph.getNumberOfStations()];
         edgeTo = new int[graph.getNumberOfStations()];
     }
+
+    public abstract void search();
 
     /**
      * @param vertex Determines whether a path exists to the station as an index from the start station
@@ -55,7 +57,7 @@ public abstract class AbstractPathSearch {
         int current = endIndex;
         do {
             verticesInPath.addFirst(current);
-            nodesInPath.addFirst(graph.getStation(current));
+            nodesInPath.addFirst(graph.getStationList().get(current));
             current = edgeTo[current];
         } while (current >= 0);
         countTransfers();
@@ -95,7 +97,7 @@ public abstract class AbstractPathSearch {
 
     @Override
     public String toString() {
-        StringBuilder resultString = new StringBuilder(String.format("Path from %s to %s: ", graph.getStation(startIndex), graph.getStation(endIndex)));
+        StringBuilder resultString = new StringBuilder(String.format("Path from %s to %s: ", graph.getStationList().get(startIndex), graph.getStationList().get(endIndex)));
         resultString.append(nodesInPath).append(" with " + transfers).append(" transfers");
         return resultString.toString();
     }
