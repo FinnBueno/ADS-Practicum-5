@@ -65,4 +65,8 @@ public class DijkstraShortesPath extends AbstractPathSearch {
         resultString.append(nodesInPath).append(" with " + transfers).append(" transfers").append(" and takes " + getTotalWeight(endIndex) + " minutes");
         return resultString.toString();
     }
+
+    public double getTotalTimeTaken() {
+        return getTotalWeight(endIndex);
+    }
 }

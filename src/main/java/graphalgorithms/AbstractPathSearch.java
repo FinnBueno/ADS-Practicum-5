@@ -88,11 +88,15 @@ public abstract class AbstractPathSearch {
      * Method to print all the nodes that are visited by the search algorithm implemented in one of the subclasses.
      */
     public void printNodesInVisitedOrder() {
-        System.out.print("Nodes in visited order: ");
+        System.out.printf("Nodes in visited order (%d): ", nodesVisited.size());
         for (Station vertex : nodesVisited) {
-            System.out.print(vertex.getStationName() + " ");
+            System.out.print(vertex.getStationName() + ", ");
         }
         System.out.println();
+    }
+
+    public int amountOfNodesVisited() {
+        return nodesVisited.size();
     }
 
     @Override

@@ -6,10 +6,12 @@ import java.util.Set;
 public class Station {
 
     private String stationName;
+    private Location location;
     private Set<Line> lines;
 
-    public Station(String nodeName) {
+    public Station(String nodeName, Location location) {
         this.stationName = nodeName;
+        this.location = location;
         lines = new HashSet<>();
     }
 
@@ -74,5 +76,9 @@ public class Station {
     @Override
     public String toString() {
         return stationName;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 }
