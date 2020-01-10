@@ -7,6 +7,7 @@ public class TransportGraph {
 
     private int numberOfStations;
     private int numberOfConnections;
+    private Location[] locations;
     private List<Station> stationList; // vertices
     private Map<String, Integer> stationIndices;
     private List<Integer>[] adjacencyLists;
@@ -15,6 +16,7 @@ public class TransportGraph {
     public TransportGraph (int size) {
         this.numberOfStations = size;
         stationList = new ArrayList<>(size);
+        locations = new Location[size];
         stationIndices = new HashMap<>();
         connections = new Connection[size][size];
         adjacencyLists = (List<Integer>[]) new List[size];
@@ -30,6 +32,7 @@ public class TransportGraph {
     public void addVertex(Station vertex) {
         stationList.add(vertex);
         stationIndices.put(vertex.getStationName(), stationList.size() - 1);
+        locations[stationList.size() - 1] = vertex.getLocation();
     }
 
 
@@ -50,7 +53,7 @@ public class TransportGraph {
     /**
      * Method to add an edge in the form of a connection between stations.
      * The method also adds the edge as an edge of indices by calling addEdge(int from, int to).
-     * The method adds the connecion to the connections 2D-array.
+     * The method adds the connection to the connections 2D-array.
      * The method also builds the reverse connection, Connection(To, From) and adds this to the connections 2D-array.
      * @param connection The edge as a connection between stations
      */
@@ -128,10 +131,10 @@ public class TransportGraph {
          *                       followed by the type of the line and the stations on the line in order.
          * @return
          */
-        public Builder addLine(String[] lineDefinition) {
+        public Builder addLine(String[] lineDefinition, int[][] locations) {
             Line line = new Line(lineDefinition[0], lineDefinition[1]);
             for (int i = 2; i < lineDefinition.length; i++) {
-                Station station = new Station(lineDefinition[i]);
+                Station station = new Station(lineDefinition[i], new Location(locations[i - 2]));
                 line.addStation(station);
             }
             lineList.add(line);
@@ -181,13 +184,13 @@ public class TransportGraph {
                 Double[] weightsList = null;
                 if(!LineWeights.isEmpty())
                     weightsList = LineWeights.get(iterator.getAndIncrement());
-                
+
                 List<Station> stationsOnLine = line.getStationsOnLine();
                 for (int i = 0; i < stationsOnLine.size() - 1; i++) {
                     Station from = stationsOnLine.get(i);
                     Station to = stationsOnLine.get(i + 1);
                     System.out.printf("Connection %s to %s on line %s%n", from.getStationName(), to.getStationName(), line.toString());
-                    
+
                     if(weightsList != null)
                         connectionSet.add(new Connection(from, to, weightsList[i], line));
                     else

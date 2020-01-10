@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2470e8f7-f918-4933-8176-250913e9ee52" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/DepthFirstPath.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/A_Star.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Location.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/graphalgorithms/AbstractPathSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/AbstractPathSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/graphalgorithms/DijkstraShortesPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/DijkstraShortesPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Station.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/TransportGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/TransportGraph.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +33,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Opdracht 3" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -54,12 +57,19 @@
     <configuration name="TransportGraphLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controller.TransportGraphLauncher" />
       <module name="PublicTransportMap" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="-Xint" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+        </ENTRIES>
       </extension>
       <method v="2">
         <option name="Make" enabled="true" />
@@ -113,8 +123,7 @@
       <option name="presentableId" value="Default" />
       <updated>1575756447305</updated>
       <workItem from="1575756452638" duration="340000" />
-      <workItem from="1575756994855" duration="445000" />
-      <workItem from="1575803637019" duration="6211000" />
+      <workItem from="1578580703847" duration="16567000" />
     </task>
     <servers />
   </component>
